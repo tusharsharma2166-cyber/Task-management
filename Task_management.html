@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Task Manager</title>
+  <link rel="stylesheet" href="Task_management.css" />
+</head>
+<body>
+
+  <div class="container">
+    <!-- App Header -->
+    <header class="app-header">
+      <h1>Task Manager</h1>
+      <p>Organize your daily tasks simply and effectively</p>
+    </header>
+
+    <!-- Simple Summary Counter -->
+    <div class="stats-bar">
+      <div class="stat-box">
+        <span class="stat-number" id="total-count">0</span>
+        <span class="stat-label">Total</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number" id="pending-count">0</span>
+        <span class="stat-label">Pending</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number" id="completed-count">0</span>
+        <span class="stat-label">Completed</span>
+      </div>
+    </div>
+
+    <!-- Add Task Form -->
+    <form id="task-form" class="task-form">
+      <input 
+        type="text" 
+        id="task-input" 
+        placeholder="Enter a new task..." 
+        required 
+      />
+      
+      <select id="priority-input">
+        <option value="Low">Low Priority</option>
+        <option value="Medium" selected>Medium Priority</option>
+        <option value="High">High Priority</option>
+      </select>
+
+      <input type="date" id="date-input" />
+
+      <button type="submit" class="add-btn">Add Task</button>
+    </form>
+
+    <!-- Search and Filter Controls -->
+    <div class="controls-bar">
+      <input 
+        type="text" 
+        id="search-input" 
+        placeholder="Search tasks..." 
+      />
+
+      <div class="filter-buttons">
+        <button type="button" class="filter-btn active" data-filter="all">All</button>
+        <button type="button" class="filter-btn" data-filter="pending">Pending</button>
+        <button type="button" class="filter-btn" data-filter="completed">Completed</button>
+      </div>
+    </div>
+
+    <!-- Task List -->
+    <ul id="task-list" class="task-list">
+      <!-- Tasks will be added here by JavaScript -->
+    </ul>
+
+    <!-- Empty Message -->
+    <p id="empty-message" class="empty-message">No tasks found. Add a task above!</p>
+
+    <!-- Footer Actions -->
+    <div class="footer-bar">
+      <button type="button" id="clear-completed-btn" class="clear-btn">
+        Clear Completed Tasks
+      </button>
+    </div>
+  </div>
+
+  <script src="Task_management.js"></script>
+</body>
+</html>
