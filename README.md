@@ -1,1 +1,1 @@
-task management project
+SEC project -> Task Management Project
