@@ -209,3 +209,45 @@ taskList.addEventListener("click", updateStats);
 // Initialize counter on page load
 updateStats();
 
+
+// =========================================================
+// FUNCTIONALITY 6: EDIT TASK & DELETE SINGLE TASK
+// =========================================================
+function editTaskItem(taskId) {
+  const task = tasks.find(function (t) {
+    return t.id === taskId;
+  });
+  if (!task) return;
+
+
+  const updatedTitle = prompt("Edit your task:", task.title);
+  if (updatedTitle !== null && updatedTitle.trim() !== "") {
+    task.title = updatedTitle.trim();
+    saveTasks();
+    renderTasks();
+  }
+}
+
+
+function deleteTaskItem(taskId) {
+  tasks = tasks.filter(function (task) {
+    return task.id !== taskId;
+  });
+  saveTasks();
+  renderTasks();
+}
+
+
+taskList.addEventListener("click", function (event) {
+  const id = Number(event.target.getAttribute("data-id"));
+
+
+  if (event.target.classList.contains("edit-btn")) {
+    editTaskItem(id);
+  } else if (event.target.classList.contains("delete-btn")) {
+    deleteTaskItem(id);
+  }
+});
+
+
+
