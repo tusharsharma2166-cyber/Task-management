@@ -104,5 +104,108 @@ taskList.addEventListener("change", function (event) {
   }
 });
 
+// =========================================================
+// FUNCTIONALITY 3: SEARCH TASKS BY KEYWORD
+// =========================================================
+const searchInput = document.getElementById("search-input");
 
+function searchTasks() {
+  const searchText = searchInput.value.toLowerCase().trim();
+  const allTaskItems = document.querySelectorAll(".task-item");
+  let visibleCount = 0;
+
+  allTaskItems.forEach(function (item) {
+    const titleText = item.querySelector(".task-title").textContent.toLowerCase();
+    if (titleText.includes(searchText)) {
+      item.style.display = "flex";
+      visibleCount++;
+    } else {
+      item.style.display = "none";
+    }
+  });
+
+  emptyMessage.style.display = visibleCount === 0 ? "block" : "none";
+}
+
+searchInput.addEventListener("input", searchTasks);
+
+// =========================================================
+// FUNCTIONALITY 4: FILTER TASKS BY STATUS (ALL / PENDING / COMPLETED)
+// =========================================================
+const filterButtons = document.querySelectorAll(".filter-btn");
+let currentFilter = "all";
+
+function applyStatusFilter() {
+  const allTaskItems = document.querySelectorAll(".task-item");
+  let visibleCount = 0;
+
+  allTaskItems.forEach(function (item) {
+    const isCompleted = item.classList.contains("completed");
+
+    if (currentFilter === "pending" && !isCompleted) {
+      item.style.display = "flex";
+      visibleCount++;
+    } else if (currentFilter === "completed" && isCompleted) {
+      item.style.display = "flex";
+      visibleCount++;
+    } else if (currentFilter === "all") {
+      item.style.display = "flex";
+      visibleCount++;
+    } else {
+      item.style.display = "none";
+    }
+  });
+
+  emptyMessage.style.display = visibleCount === 0 ? "block" : "none";
+}
+
+filterButtons.forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    filterButtons.forEach(function (b) {
+      b.classList.remove("active");
+    });
+    btn.classList.add("active");
+
+    currentFilter = btn.getAttribute("data-filter");
+    applyStatusFilter();
+  });
+});
+
+
+// =========================================================
+// FUNCTIONALITY 5: TASK COUNTER STATS & CLEAR COMPLETED TASKS
+// =========================================================
+const totalCountEl = document.getElementById("total-count");
+const pendingCountEl = document.getElementById("pending-count");
+const completedCountEl = document.getElementById("completed-count");
+const clearCompletedBtn = document.getElementById("clear-completed-btn");
+
+function updateStats() {
+  const total = tasks.length;
+  const completed = tasks.filter(function (t) {
+    return t.completed;
+  }).length;
+  const pending = total - completed;
+
+  totalCountEl.textContent = total;
+  pendingCountEl.textContent = pending;
+  completedCountEl.textContent = completed;
+}
+
+function clearCompletedTasks() {
+  tasks = tasks.filter(function (task) {
+    return !task.completed;
+  });
+  saveTasks();
+  renderTasks();
+  updateStats();
+}
+
+clearCompletedBtn.addEventListener("click", clearCompletedTasks);
+taskForm.addEventListener("submit", updateStats);
+taskList.addEventListener("change", updateStats);
+taskList.addEventListener("click", updateStats);
+
+// Initialize counter on page load
+updateStats();
 
