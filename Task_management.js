@@ -104,5 +104,29 @@ taskList.addEventListener("change", function (event) {
   }
 });
 
+// =========================================================
+// FUNCTIONALITY 3: SEARCH TASKS BY KEYWORD
+// =========================================================
+const searchInput = document.getElementById("search-input");
+
+function searchTasks() {
+  const searchText = searchInput.value.toLowerCase().trim();
+  const allTaskItems = document.querySelectorAll(".task-item");
+  let visibleCount = 0;
+
+  allTaskItems.forEach(function (item) {
+    const titleText = item.querySelector(".task-title").textContent.toLowerCase();
+    if (titleText.includes(searchText)) {
+      item.style.display = "flex";
+      visibleCount++;
+    } else {
+      item.style.display = "none";
+    }
+  });
+
+  emptyMessage.style.display = visibleCount === 0 ? "block" : "none";
+}
+
+searchInput.addEventListener("input", searchTasks);
 
 
