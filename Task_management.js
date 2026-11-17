@@ -172,3 +172,40 @@ filterButtons.forEach(function (btn) {
 });
 
 
+// =========================================================
+// FUNCTIONALITY 5: TASK COUNTER STATS & CLEAR COMPLETED TASKS
+// =========================================================
+const totalCountEl = document.getElementById("total-count");
+const pendingCountEl = document.getElementById("pending-count");
+const completedCountEl = document.getElementById("completed-count");
+const clearCompletedBtn = document.getElementById("clear-completed-btn");
+
+function updateStats() {
+  const total = tasks.length;
+  const completed = tasks.filter(function (t) {
+    return t.completed;
+  }).length;
+  const pending = total - completed;
+
+  totalCountEl.textContent = total;
+  pendingCountEl.textContent = pending;
+  completedCountEl.textContent = completed;
+}
+
+function clearCompletedTasks() {
+  tasks = tasks.filter(function (task) {
+    return !task.completed;
+  });
+  saveTasks();
+  renderTasks();
+  updateStats();
+}
+
+clearCompletedBtn.addEventListener("click", clearCompletedTasks);
+taskForm.addEventListener("submit", updateStats);
+taskList.addEventListener("change", updateStats);
+taskList.addEventListener("click", updateStats);
+
+// Initialize counter on page load
+updateStats();
+
