@@ -129,4 +129,46 @@ function searchTasks() {
 
 searchInput.addEventListener("input", searchTasks);
 
+// =========================================================
+// FUNCTIONALITY 4: FILTER TASKS BY STATUS (ALL / PENDING / COMPLETED)
+// =========================================================
+const filterButtons = document.querySelectorAll(".filter-btn");
+let currentFilter = "all";
+
+function applyStatusFilter() {
+  const allTaskItems = document.querySelectorAll(".task-item");
+  let visibleCount = 0;
+
+  allTaskItems.forEach(function (item) {
+    const isCompleted = item.classList.contains("completed");
+
+    if (currentFilter === "pending" && !isCompleted) {
+      item.style.display = "flex";
+      visibleCount++;
+    } else if (currentFilter === "completed" && isCompleted) {
+      item.style.display = "flex";
+      visibleCount++;
+    } else if (currentFilter === "all") {
+      item.style.display = "flex";
+      visibleCount++;
+    } else {
+      item.style.display = "none";
+    }
+  });
+
+  emptyMessage.style.display = visibleCount === 0 ? "block" : "none";
+}
+
+filterButtons.forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    filterButtons.forEach(function (b) {
+      b.classList.remove("active");
+    });
+    btn.classList.add("active");
+
+    currentFilter = btn.getAttribute("data-filter");
+    applyStatusFilter();
+  });
+});
+
 
